@@ -1,0 +1,30 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+h1{
+    text-decoration: underline;
+    color: lightseagreen;
+}
+body{
+    margin: 5% 25% 5% 25%;
+    padding: 2% 5%;
+    border: 3px ridge lightsalmon;
+}
+#ot, input{
+    font-size: 110%;
+}
+input{margin-top: 2%;}
+label{
+    display: inline-block;
+    width: 170px;
+}
+textarea{
+    margin-left: 170px;
+}
+input[type=submit]{
+    margin-left: 170px;
+    margin-top: 2%;
+}

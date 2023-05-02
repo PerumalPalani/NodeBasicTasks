@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Table format data</title>
+    <!-- <link rel="stylesheet" href="./nodeTable.css"> -->
+    <style>
+        * {
+            padding: 0%;
+            margin: 0%;
+            font-family: 'Times New Roman', Times, serif;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-decoration: underline;
+            color: lightseagreen;
+        }
+
+        body {
+            margin: 1% 20% 1% 15%;
+            padding: 1% 1%;
+            border: 3px ridge lightsalmon;
+        }
+        #main{
+            display: inline-block;
+        }
+        #id1, #id2{
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        #ot,
+        input {
+            font-size: 110%;
+        }
+
+        input {
+            margin-top: 2%;
+        }
+
+        label {
+            display: inline-block;
+            width: 170px;
+        }
+
+        textarea {
+            margin-left: 170px;
+        }
+
+        input[type=submit] {
+            margin-left: 170px;
+            margin-top: 2%;
+        }
+    </style>
+    <script>
+        fetch("./data.json")
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+                var arr = [...data];
+                console.log(arr);
+                const h = [];
+                let head1 = document.getElementById('head');
+                let body = document.getElementById('content');
+                let j = 0;
+                for (let x in arr[0]) {
+                    h.push(x);
+                }
+                for (let i = 0; i < h.length; i++) {
+                    let a = document.createElement('td');
+                    let txt = head1.appendChild(a);
+                    txt.innerHTML = h[i];
+                }
+                for (j; j < arr.length; j++) {
+                    let b = document.createElement('tr');
+                    let ta = body.appendChild(b);
+                    for (let i = 0; i < h.length; i++) {
+                        let c = document.createElement('td');
+                        let txt = ta.appendChild(c);
+                        txt.innerHTML = arr[j][h[i]];
+                    }
+                }
+            });      
+    </script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="id1">
+            <h2>User Infromations:-</h2>
+            <form action="http://localhost:3038/post" method="post">
+                <label for="id">User Id:</label><input type="number" name="id"><br>
+                <label for="fname">Full Name:</label> <input type="text" name="fname"><br>
+                <label for="mobile">Mobile Number:</label> <input type="tel" name="mnum" id="mnum"><br>
+                <label for="email">Email ID:</label> <input type="email" name="eid" id="eid"><br>
+                <label for="address">Address:</label> <input type="text" name="add" id="add"><br>
+                <label for="deg">Qualification:</label><input type="text" name="deg"><br>
+                <label for="gen">Gender:</label> <input type="radio" name="gender" id="gen1" value="male">Male
+                <input type="radio" name="gender" id="gen2" value="female">female
+                <input type="radio" name="gender" id="gen3" value="custom">Custom<br>
+                <label for="txt">Enter your comment:</label> <br><textarea name="txt1" id="txt" cols="30"
+                    rows="3"></textarea><br>
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+            </form>
+        </div>
+        <div id="id2">
+            <h2>Edit User Infromations:-</h2>
+            <form action="http://localhost:3038/put" method="post">
+                <label for="id">User Id:</label><input type="number" name="id"><br>
+                <label for="fname">Full Name:</label> <input type="text" name="fname"><br>
+                <label for="mobile">Mobile Number:</label> <input type="tel" name="mnum" id="mnum"><br>
+                <label for="email">Email ID:</label> <input type="email" name="eid" id="eid"><br>
+                <label for="address">Address:</label> <input type="text" name="add" id="add"><br>
+                <label for="deg">Qualification:</label><input type="text" name="deg"><br>
+                <label for="gen">Gender:</label> <input type="radio" name="gender" id="gen1" value="male">Male
+                <input type="radio" name="gender" id="gen2" value="female">female
+                <input type="radio" name="gender" id="gen3" value="custom">Custom<br>
+                <label for="txt">Enter your comment:</label> <br><textarea name="txt1" id="txt" cols="30"
+                    rows="3"></textarea><br>
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+            </form>
+        </div>
+    </div> 
+    <div id="id3">
+        <h2>Delete User Infromations:-</h2>
+        <form action="http://localhost:3038/delete" method="post">
+            <label for="id">User Id:</label><input type="number" name="id"><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </form>
+    </div>   
+    <h2>Records:-</h2>
+    <table border='5px solid black' cellspacing='2px' cellpadding='2px'>
+        <thead>
+            <tr id="head">
+
+            </tr>
+        </thead>
+        <tbody id="content">
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>
