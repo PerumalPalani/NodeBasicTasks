@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Put Examples</title>
+</head>
+<body>
+    <h3>Get REQUEST START!!!!</h3>
+    <form action="http://localhost:3036/cre" method="get">
+        User Name: <input type="text" name="fname"><br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+        
+    </form><br>
+    <h3>Get EDIT OBJECT ALREADY EXISTS!!</h3>
+    <form action="http://localhost:3036/cre/id" method="get">
+        User Id: <input type="number" name="id"><br>
+        User Age: <input type="number" name="age"><br>
+        User Address: <input type="text" name="address"><br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form><br>
+    <h3>PUT EDIT OBJECT ALREADY EXISTS!!</h3>
+    <form action="http://localhost:3036/cre/id/put" method="PUT">
+        User Id: <input type="number" name="id"><br>
+        User Name: <input type="text" name="fname"><br>
+        User Age: <input type="number" name="age"><br>
+        User Address: <input type="text" name="address"><br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+
+    <h3>PUT USE TO EDIT OBJECT ALREADY EXISTS!! BY USING AJAX</h3>
+
+    <form action="http://localhost:3036/domain/route/param" method="PUT">
+        Remove id:<input type="number" name="delete_id"><br>
+        Replace id:<input type="number" name="put_id"><br>
+        user name:<input type="text" name="put_fname"><br>
+        <input type="button" name="update_data" value="Save Changes">
+        <input type="button" name="remove_data" value="Remove">
+    </form>
+    <hr>
+    <h3>DELETE USE TO EDIT OBJECT ALREADY EXISTS!! BY USING AJAX</h3>
+    <form action="http://localhost:3036/domain/route/param" method="DELETE">
+       Remove userid: <input type="number" name="delete_id"><br>
+       <!-- Delete username: <input type="text" name="delete_name" value="content_or_not"><br> -->
+        <input type="button" name="delete_data" value="Remove items">
+    </form>
+    <script>
+        //--this is optional not working now in browser, but need means debug to we will use!!!.
+        //--put method--
+        var putMethod = (e)=>{
+            e.preventDefault();
+            var target = e.target;
+            while(target.tagName != 'FORM'){
+                target = target.parentElement
+            }
+            var url = target.getAttribute('action');
+            var bodyform = target.querySelectorAll("[name^=put_]");
+            var body = {};
+            bodyform.forEach(element =>{
+                var nameArray = element.getAttribute("name").split('_');
+                var name = nameArray[nameArray.length - 1];
+                var value;
+                if(element.tagName != 'TEXTAREA'){
+                    value = element.value;
+                }else{
+                    value = element.innerHTML;
+                }
+                body[name] = value;
+            });
+            let path = url + '?' + 'id=' + `${body.id}&` + 'name=' + `${body.fname}`;
+            var xhr = new XMLHttpRequest();
+            xhr.open("PUT", path);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.onload = ()=>{
+                if(xhr.status === 200){
+                    location.reload(true);
+                }
+                else{
+                    console.log(xhr.status, xhr.responseText);
+                }
+            }
+            xhr.send(body);
+        }
+        //delete method
+        var deleteMethod = (e) =>{
+            e.preventDefault();
+            var confirm = window.confirm('Are you sure delete content?');
+            if(confirm){
+                var target = e.target;
+                while(target.tagName != 'FORM'){
+                    target = target.parentElement;
+                }
+                var bodyform = target.querySelectorAll("[name^=delete_]");
+            var body = {};
+            bodyform.forEach(element =>{
+                var nameArray = element.getAttribute("name").split('_');
+                var name = nameArray[nameArray.length - 1];
+                var value;
+                if(element.tagName != 'TEXTAREA'){
+                    value = element.value;
+                }else{
+                    value = element.innerHTML;
+                }
+                body[name] = value;
+            });
+            let n = url+`?id=${body.id}`;
+                var url = target.getAttribute('action');
+                var xhr = new XMLHttpRequest();
+                xhr.open('DELETE', n);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = () =>{
+                    if(xhr.status === 200){
+                        location.reload(true);
+                        console.log(xhr.responseText);
+                    }else{
+                        console.log(xhr.status, xhr.responseText);
+                    }
+                }
+                xhr.send();
+            }
+        }
+        //---onclick events---
+        document.querySelectorAll('[name=update_data], [name=delete_data]').forEach(element =>{
+            var button = element;
+            var form = element;
+            while(form.tagName != 'FORM'){
+                form = form.parentElement;
+            }
+            var method = form.getAttribute('method');
+            if(method == 'PUT'){
+                button.addEventListener('click', putMethod);
+            }
+            if(method == 'DELETE'){
+                button.addEventListener('click', deleteMethod);
+            }
+        });
+        //--put have remove elements button event--
+        document.querySelectorAll('[name=remove_data]').forEach(element =>{
+            var button = element;
+            button.addEventListener('click', deleteMethod);
+        });
+    </script>
+</body>
+</html>
