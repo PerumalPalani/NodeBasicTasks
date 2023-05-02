@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication From</title>
+    <style>
+        * {
+            padding: 0%;
+            margin: 0%;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        body {
+            margin: 5% 30%;
+            border: 5px groove rgb(23, 103, 128);
+            padding: 1% 5%;
+        }
+
+        label {
+            display: inline-block;
+            width: 40%;
+
+        }
+        form{
+            margin: 5% 0%;
+        }
+        input{
+            margin: 2% 0%;
+            padding: 1%;
+
+        }
+        input[type='submit']{
+            margin-left: 25%;
+        }
+        h3{
+            color: rgb(141, 224, 15);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h3>Enter your credentials!!</h3>
+    <form action="http://localhost:3037/auth" method="post" id="f1">
+        <label for="user">User Name:</label><input type="text" name="username" required><br>
+        <label for="pass">User Password:</label><input type="text" name="password" required><br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+    <h3>New Authentication person updating from:-</h3>
+    <form action="http://localhost:3037/auth" method="post" id="f2">
+        <label for="user1">Authenticate userName:</label><input type="text" name="username" required><br>
+        <label for="user">Enter userName:</label><input type="text" name="username" required><br>
+        <label for="user">Enter UserPssword:</label><input type="text" name="password" required><br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+</body>
+
+</html>

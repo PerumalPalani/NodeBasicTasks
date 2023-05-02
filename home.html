@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Document</title> -->
+</head>
+
+<body>
+    <h1>Table</h1>
+    <table border='5px solid black' cellspacing='2px' cellpadding='2px'>
+        <thead>
+            <tr id="head">
+
+            </tr>
+        </thead>
+        <tbody id="content">
+
+        </tbody>
+    </table>
+    <script>
+        fetch("./data.json")
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data);
+                var arr = [...data];
+                console.log(arr);
+                const h = [];
+                let head1 = document.getElementById('head');
+                let body = document.getElementById('content');
+                let j = 0;
+                for (let x in arr[0]) {
+                    h.push(x);
+                }
+                for (let i = 0; i < h.length; i++) {
+                    let a = document.createElement('td');
+                    let txt = head1.appendChild(a);
+                    txt.innerHTML = h[i];
+                }
+                for (j; j < arr.length; j++) {
+                    let b = document.createElement('tr');
+                    let ta = body.appendChild(b);
+                    for (let i = 0; i < h.length; i++) {
+                        let c = document.createElement('td');
+                        let txt = ta.appendChild(c);
+                        txt.innerHTML = arr[j][h[i]];
+                    }
+                }
+            });
+
+
+    </script>
+
+</body>
+
+</html>
